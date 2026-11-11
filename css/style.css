@@ -1,0 +1,246 @@
+/* Open BOSSE - static rebuild. Fonts measured from live site: Oswald (headings) + Roboto (body).
+   Layout measured on the live site at 1440 / 1024 / 390: 1300px content column (1400 container, 50px padding),
+   100px between sections (70px on phones), hero 720px tall, header 114px (64px on phones). */
+:root{
+  --bg:#f7f3eb;        /* live body background rgb(247,243,235) */
+  --ink:#121212;       /* live heading colour */
+  --body:rgba(18,18,18,.75);
+  --btn-text:#f3f3f3;
+  --wrap:1400px;
+  --pad:50px;          /* page side padding: 50px desktop, 15px phone */
+  --gap:100px;         /* space between sections: 100px desktop, 70px phone */
+
+  /* TYPE SCALE: measured on the live site (desktop 1440 / phone 390). Every font-size below uses one of these. */
+  --fs-hero:clamp(2.5rem,2.22rem + 1.14vw,3.25rem);   /* home hero headline: 40 -> 52px */
+  --fs-h1:clamp(1.875rem,1.64rem + .95vw,2.5rem);     /* page titles: 30 -> 40px */
+  --fs-h2:clamp(1.875rem,1.64rem + .95vw,2.5rem);     /* section titles: 30 -> 40px */
+  --fs-h3:clamp(1.25rem,1.16rem + .38vw,1.5rem);      /* blog card titles: 20 -> 24px */
+  --fs-h4:clamp(1.0625rem,1.04rem + .1vw,1.125rem);   /* card titles, footer heading, price: 17 -> 18px */
+  --fs-p1:15px;                                       /* main paragraph: 15px phone, 16px from 750px */
+  --fs-p2:14px;                                       /* secondary text: shipping line, colour chips */
+  --fs-cap:13px;                                      /* captions, dates, small print, placeholder labels */
+  --fs-ui:15px;                                       /* buttons */
+  --fs-nav:14px;                                      /* menu: 14px phone, 18px from 750px */
+  --fs-foot:14px;                                     /* footer links */
+  --fs-input:16px;                                    /* form labels and fields (16px stops iOS zooming in) */
+  /* CORNER RADII: measured on the live site. Buttons 13, form fields 10, pictures 20, colour chips 40. */
+  --r-btn:13px;
+  --r-input:10px;
+  --r-media:20px;
+  --r-pill:40px;
+  --lh-body:1.8;
+  --lh-head:1.3;
+  --ls:.6px;                                          /* live letter-spacing on body and headings */
+}
+@media (min-width:750px){:root{--fs-p1:16px;--fs-nav:18px}}
+@media (max-width:749px){:root{--pad:15px;--gap:70px}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:Roboto,Arial,Helvetica,sans-serif;font-size:var(--fs-p1);line-height:var(--lh-body);letter-spacing:var(--ls)}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad)}
+h1,h2,h3{font-family:Oswald,Arial Narrow,sans-serif;font-weight:400;color:var(--ink);line-height:var(--lh-head);letter-spacing:var(--ls);margin:0 0 .4em}
+h1{font-size:var(--fs-h1)}
+h2{font-size:var(--fs-h2)}
+h3{font-size:var(--fs-h3)}
+p{margin:0 0 1em}
+.btn{display:inline-block;background:var(--ink);color:var(--btn-text);font-family:Roboto,Arial,sans-serif;font-size:var(--fs-ui);line-height:18px;letter-spacing:1px;padding:14.5px 30px;text-decoration:none;border:0;border-radius:var(--r-btn);cursor:pointer}
+.btn:hover{background:#333}
+.text-link{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+/* skip link: hidden until a keyboard user focuses it */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100;background:var(--ink);color:var(--btn-text);font-size:var(--fs-ui);line-height:18px;padding:12px 16px;text-decoration:none;border-radius:var(--r-btn)}
+.skip-link:focus{left:16px;top:16px;outline:2px solid var(--btn-text);outline-offset:-4px}
+main:focus{outline:none}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:var(--bg)}
+.site-header .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:114px;padding-inline:38px;gap:16px}
+.site-header nav{display:flex;gap:0;flex-wrap:nowrap;white-space:nowrap}
+.site-header nav a{text-decoration:none;font-size:var(--fs-nav);color:var(--body);padding:8px;line-height:26px}
+.site-header nav a:hover,.site-header nav a[aria-current]{text-decoration:underline;text-underline-offset:4px;color:var(--ink)}
+.logo .img-wrap img{height:59px;width:auto;max-width:none;object-fit:contain}
+.logo .ph-label{font-family:Oswald,sans-serif;font-size:var(--fs-h3);color:var(--ink)}
+.nav-toggle{display:none;background:none;border:0;padding:0;width:44px;height:44px;cursor:pointer;justify-self:start;margin-left:3px}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);margin:5px auto;transition:.2s}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* self-healing image placeholders */
+.img-wrap{position:relative;overflow:hidden;background:#e8e0cf}
+.img-wrap img{width:100%;height:100%;object-fit:cover}
+.ph-label{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;color:#7a6f55;font-size:var(--fs-cap)}
+.img-wrap .ph-label{position:absolute;inset:0}
+
+/* sections: 100px between them on desktop, 70px on phones. The first section on a page has no gap above it. */
+main > section{margin-top:var(--gap);padding-block:0}
+main > section:first-child{margin-top:0}
+/* inner pages: content starts a little below the header, as live */
+.blog-index,.contact,.post,.not-found{padding-block:57px 56px}
+.product{padding-block:37px 56px}
+.legal{padding-block:30px 56px}
+/* home page sections: small inner padding, as measured */
+.intro{padding-top:20px}
+main > section.video{padding-bottom:32px}
+#om-oss,#varfor{padding-block:36px}
+.distributors{padding-top:56px}
+
+/* home page: the header is transparent over the top of the hero image, solid once scrolled */
+.home .site-header{position:fixed;top:0;left:0;right:0;background:transparent;transition:background .2s}
+.home .site-header.scrolled,.home .site-header.open{background:var(--bg)}
+
+/* hero: 720px tall, text box on the right; on phones the image sits on top and the text is centred below */
+main > section.hero{position:relative;height:720px;padding:0;display:flex;align-items:center;overflow:hidden;background:#f0a500}
+.hero .img-wrap{position:absolute;inset:0;background:transparent}
+.hero-content{position:relative;z-index:1;width:100%;max-width:var(--wrap);margin-inline:auto;display:flex;justify-content:flex-end;padding:58px 50px 0}
+/* text sits in the plain yellow area on the right, clear of the hand and bottle on the left */
+.hero-box{width:min(620px,46vw);padding-inline:40px;text-align:left}
+.hero h1{font-size:var(--fs-hero);margin-bottom:.75em}
+
+/* intro text */
+.intro{text-align:center}
+.intro .wrap{max-width:880px}
+.intro p{text-align:left}
+
+/* video block between intro and About */
+.video-embed{position:relative;aspect-ratio:16/9;background:#e8e0cf;max-width:100%}
+.video-embed video{position:absolute;inset:0;width:100%;height:100%;background:#000}
+.video-embed .ph-label{position:absolute;inset:0}
+
+/* image + text rows: equal columns, image fills the height of the text column */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+.grid-2 .img-col{position:relative}
+.grid-2 .img-col .img-wrap{position:absolute;inset:0;border-radius:var(--r-media)}
+.grid-2 .text-col{padding:65px 70px;align-self:center}
+blockquote{margin:1.2em 0;padding-left:20px;border-left:3px solid var(--ink);font-style:italic}
+
+/* slideshow: inset to the content column, one slide at a time */
+.slideshow .slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:var(--r-media)}
+.slideshow .slides::-webkit-scrollbar{display:none}
+.slides .img-wrap{flex:0 0 100%;aspect-ratio:1300/560;scroll-snap-align:start}
+.slide-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;font-size:var(--fs-cap)}
+.slide-btn{width:44px;height:44px;border:0;border-radius:0;background:transparent;color:var(--ink);font-size:24px;line-height:1;cursor:pointer}
+.slide-btn:focus-visible,.slide-dot:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.slide-dots{display:flex;gap:0}
+.slide-dot{width:30px;height:30px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.slide-dot::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:.35}
+.slide-dot[aria-current="true"]::before{opacity:1}
+
+/* distributors */
+.distributors h2{text-align:left;margin-bottom:.8em}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{text-align:center;padding:25px 25px 0}
+.card .img-wrap{height:250px;background:transparent;margin-bottom:25px}
+.card .img-wrap img{object-fit:contain;object-position:center}
+.card h3{font-size:var(--fs-h4)}
+.card p{margin-bottom:1.2em;text-align:left}
+
+/* product page */
+.product-grid{display:grid;grid-template-columns:55fr 45fr;gap:0;align-items:start}
+.gallery-main{aspect-ratio:1/1;border-radius:var(--r-media)}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;list-style:none;margin:8px 0 0;padding:0}
+.thumbs button{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1/1;padding:0;border:2px solid transparent;border-radius:var(--r-media);background:#e8e0cf;cursor:pointer;font-size:var(--fs-cap);overflow:hidden}
+.thumbs button[aria-current="true"]{border-color:var(--ink)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.product-info{padding:29px 0 0 50px}
+.price{font-size:var(--fs-h4);color:var(--ink);margin-bottom:.4em}
+.ship{font-size:var(--fs-p2)}
+.colors{border:0;padding:0;margin:1.4em 0}
+.colors legend{padding:0;margin-bottom:8px;color:var(--ink)}
+.colors ul{display:flex;gap:10px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.colors li{border:1px solid rgba(18,18,18,.4);border-radius:var(--r-pill);padding:6px 16px;font-size:var(--fs-p2)}
+.buy{display:block;width:100%;max-width:440px;text-align:center}
+.free-ship{margin:.8em 0 1.6em}
+.note{font-size:var(--fs-cap)}
+
+/* page titles: left on content pages (as live), centred on legal and 404 */
+.page-title{text-align:left;margin-bottom:.6em}
+
+/* contact page: 726px column, name and email side by side */
+.contact .wrap{max-width:826px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.contact-form label{display:block;margin:1.2em 0 .3em;color:var(--ink);font-size:var(--fs-input)}
+.contact-form input,.contact-form textarea{width:100%;font:inherit;font-size:var(--fs-input);color:var(--ink);background:transparent;border:1px solid rgba(18,18,18,.55);padding:7px 14px;border-radius:var(--r-input)}
+.contact-form input:focus,.contact-form textarea:focus{outline:2px solid var(--ink);outline-offset:2px}
+.contact-form .btn{margin-top:1.6em}
+.form-error{color:#a31616;margin:1em 0 0}
+.form-note{font-size:var(--fs-cap);margin-top:1.4em}
+
+/* blog index: two columns as live */
+.post-cards{display:grid;grid-template-columns:1fr 1fr;gap:30px 8px}
+.post-card{text-align:left}
+.post-card-img{display:block}
+.post-card .img-wrap{aspect-ratio:646/307;margin-bottom:16px}
+.post-card h3{margin-bottom:.4em}
+.post-card h3 a{text-decoration:none}
+.post-card h3 a:hover{text-decoration:underline}
+
+/* blog article: 726px column, left aligned */
+.post .wrap{max-width:826px}
+.post-date{text-align:left;font-size:var(--fs-cap);margin-bottom:2em}
+.post-body p,.post-body ul{text-align:left}
+.post-body ul{padding-left:1.4em;margin:0 0 1em}
+.post-img{margin:1.6em 0;aspect-ratio:4/3;border-radius:var(--r-media)}
+.video-wrap{margin:1.6em 0}
+.video-wrap video{width:100%;aspect-ratio:16/9;background:#000}
+.post-back{margin-top:2.4em;text-align:center}
+
+/* legal pages: 544px column */
+.legal .wrap{max-width:644px}
+.legal .page-title{text-align:center}
+.legal-body p{text-align:left}
+.legal-body h2{font:700 var(--fs-p1)/var(--lh-body) Roboto,Arial,sans-serif;letter-spacing:var(--ls);text-align:left;margin:1.6em 0 .2em}
+
+/* 404 */
+.not-found{text-align:center;min-height:50vh;display:flex;align-items:center}
+.not-found .wrap{width:100%}
+.not-found .page-title{text-align:center}
+.nf-code{font-family:Oswald,sans-serif;font-size:var(--fs-h4);color:var(--ink);margin-bottom:.4em}
+
+/* footer */
+.site-footer{border-top:1px solid rgba(18,18,18,.15);padding-block:56px 32px;text-align:left}
+.site-footer h2{font-size:var(--fs-h4)}
+.social{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 32px;padding:0;list-style:none;font-size:var(--fs-foot)}
+.policy{display:flex;gap:20px;flex-wrap:wrap;margin:0;padding:0;list-style:none;font-size:var(--fs-foot)}
+.copy{font-size:var(--fs-foot);margin-top:24px}
+
+/* below 990px: hamburger menu, 64px header */
+@media (max-width:989px){
+  .site-header .wrap{grid-template-columns:44px 1fr 44px;min-height:64px;padding-inline:15px}
+  .nav-toggle{display:block}
+  .logo{grid-column:2;text-align:center}
+  .logo .img-wrap img{height:29px;margin-inline:auto}
+  .site-header nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);flex-direction:column;padding:8px 24px 20px;gap:8px;border-top:1px solid rgba(18,18,18,.12)}
+  .site-header.open nav{display:flex}
+  /* hero: below 990px the headline would sit on top of the hand and bottle, so stack it:
+     picture first (4:3 on tablets, square on phones), text centred below on the cream background */
+  main > section.hero{display:block;height:auto;background:transparent}
+  .hero .img-wrap{position:relative;inset:auto;aspect-ratio:4/3;background:#f0a500}
+  .hero-content{display:block;padding:60px 35px 20px}
+  .hero-box{width:auto;padding:0;text-align:center}
+  .hero h1{text-align:center;margin-bottom:20px}
+}
+@media (max-width:749px){
+  .hero .img-wrap{aspect-ratio:1/1}
+  #om-oss,#varfor{padding-block:48px 0}
+  .distributors{padding-top:47px}
+  .intro h2{text-align:center}
+  .intro .wrap{padding-inline:35px}
+  /* rows: text first, then image */
+  .grid-2,.cards,.product-grid,.post-cards{grid-template-columns:1fr}
+  .grid-2 .text-col{order:1;padding:0 20px 30px}
+  .grid-2 .img-col{order:2;aspect-ratio:358/294}
+  .grid-2 h2,.distributors h2{text-align:center}
+  .slides .img-wrap{aspect-ratio:360/340}
+  .card .img-wrap{height:130px}
+  .card{padding:25px 20px 0}
+  .product-info{padding:24px 0 0}
+  .product-info h1{text-align:left}
+  .product .btn{display:block}
+  .form-row{grid-template-columns:1fr}
+  .btn{display:table;margin-inline:auto}
+  .contact-form .btn{margin-inline:0}
+  .post-card h3{text-align:left}
+}
